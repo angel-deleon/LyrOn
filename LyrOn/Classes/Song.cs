@@ -84,7 +84,7 @@ namespace LyrOn.Classes
             StringReader stringReader = new StringReader(lyrics);
             string firstLines = "", line;
             int index = 0;
-            while (index < count && (line = stringReader.ReadLine()) != null) 
+            while (index++ < count && (line = stringReader.ReadLine()) != null) 
             {
                 if (firstLines.Length != 0) 
                 {

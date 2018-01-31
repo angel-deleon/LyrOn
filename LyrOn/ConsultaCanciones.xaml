@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage 
+    xmlns="http://xamarin.com/schemas/2014/forms" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+    x:Class="LyrOn.ConsultaCanciones"
+    Title="Búsquedas">
+	<ContentPage.Content>
+        <StackLayout>
+            <Label 
+                Text="Búsqueda por Autor y Nombre" 
+                HorizontalOptions="CenterAndExpand"
+                HorizontalTextAlignment="Center"/>
+            <Frame HasShadow="true" Margin="5">
+                <StackLayout>
+                    <StackLayout Orientation="Horizontal">
+                        <Label Text="Artista"></Label>
+                        <Entry x:Name="txtArtista" Placeholder="Nombre del artista" Text="{Binding artista, Mode=TwoWay}" />
+                    </StackLayout>
+                    <StackLayout Orientation="Horizontal">
+                        <Label Text="Nombre"></Label>
+                        <Entry x:Name="txtCancion" Placeholder="Nombre de la canción" Text="{Binding cancion, Mode=TwoWay}" />
+                    </StackLayout>
+                    <Button x:Name="btnBuscarAutorNombre" Text="Buscar" HorizontalOptions="FillAndExpand" />
+                </StackLayout>
+            </Frame>
+            <Label
+                Text="Búsqueda por Letra"
+                HorizontalOptions="CenterAndExpand"
+                HorizontalTextAlignment="Center" />
+            <Frame HasShadow="true" Margin="5">
+                <StackLayout>
+                    <StackLayout Orientation="Horizontal">
+                        <Label Text="Letra"></Label>
+                        <Entry x:Name="txtLetra" Placeholder="Texto en la letra" Text="{Binding texto, Mode=TwoWay}" />
+                    </StackLayout>
+                    <Button x:Name="btnBuscarLetra" Text="Buscar" HorizontalOptions="FillAndExpand" />
+                </StackLayout>
+            </Frame>
+        </StackLayout>
+	</ContentPage.Content>
+</ContentPage>

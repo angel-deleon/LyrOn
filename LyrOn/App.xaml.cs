@@ -1,14 +1,17 @@
-﻿using Xamarin.Forms;
+﻿using LyrOn.Classes;
+using Xamarin.Forms;
 
 namespace LyrOn
 {
     public partial class App : Application
     {
+        public static Songs songs = new Songs();
+
         public App()
         {
             InitializeComponent();
 
-            MainPage = new LyrOnPage();
+            MainPage = new NavigationPage(new LyrOnPage());
         }
 
         protected override void OnStart()
