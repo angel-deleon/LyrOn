@@ -5,37 +5,42 @@
     x:Class="LyrOn.ConsultaCanciones"
     Title="Búsquedas">
 	<ContentPage.Content>
-        <StackLayout>
-            <Label 
-                Text="Búsqueda por Autor y Nombre" 
-                HorizontalOptions="CenterAndExpand"
-                HorizontalTextAlignment="Center"/>
-            <Frame HasShadow="true" Margin="5">
-                <StackLayout>
-                    <StackLayout Orientation="Horizontal">
-                        <Label Text="Artista"></Label>
-                        <Entry x:Name="txtArtista" Placeholder="Nombre del artista" Text="{Binding artista, Mode=TwoWay}" />
+        <ScrollView>
+            <StackLayout>
+                <Label 
+                    Text="Búsqueda por Autor y Nombre" 
+                    HorizontalOptions="CenterAndExpand"
+                    HorizontalTextAlignment="Center"/>
+                <Frame HasShadow="true" Margin="5">
+                    <StackLayout>
+                        <StackLayout Orientation="Horizontal">
+                            <Label Text="Artista" VerticalOptions="Center"></Label>
+                            <Entry x:Name="txtArtista" Placeholder="Nombre del artista" 
+                                VerticalOptions="Center" HorizontalOptions="FillAndExpand"/>
+                        </StackLayout>
+                        <StackLayout Orientation="Horizontal">
+                            <Label Text="Nombre" VerticalOptions="Center"></Label>
+                            <Entry x:Name="txtCancion" Placeholder="Nombre de la canción" 
+                                VerticalOptions="Center" HorizontalOptions="FillAndExpand"/>
+                        </StackLayout>
+                        <Button x:Name="btnBuscarAutorNombre" Text="Buscar" HorizontalOptions="FillAndExpand" />
                     </StackLayout>
-                    <StackLayout Orientation="Horizontal">
-                        <Label Text="Nombre"></Label>
-                        <Entry x:Name="txtCancion" Placeholder="Nombre de la canción" Text="{Binding cancion, Mode=TwoWay}" />
+                </Frame>
+                <Label
+                    Text="Búsqueda por Letra"
+                    HorizontalOptions="CenterAndExpand"
+                    HorizontalTextAlignment="Center" />
+                <Frame HasShadow="true" Margin="5">
+                    <StackLayout>
+                        <StackLayout Orientation="Horizontal">
+                            <Label Text="Letra" VerticalOptions="Center"></Label>
+                            <Entry x:Name="txtLetra" Placeholder="Texto en la letra" 
+                                VerticalOptions="Center" HorizontalOptions="FillAndExpand"/>
+                        </StackLayout>
+                        <Button x:Name="btnBuscarLetra" Text="Buscar" HorizontalOptions="FillAndExpand" />
                     </StackLayout>
-                    <Button x:Name="btnBuscarAutorNombre" Text="Buscar" HorizontalOptions="FillAndExpand" />
-                </StackLayout>
-            </Frame>
-            <Label
-                Text="Búsqueda por Letra"
-                HorizontalOptions="CenterAndExpand"
-                HorizontalTextAlignment="Center" />
-            <Frame HasShadow="true" Margin="5">
-                <StackLayout>
-                    <StackLayout Orientation="Horizontal">
-                        <Label Text="Letra"></Label>
-                        <Entry x:Name="txtLetra" Placeholder="Texto en la letra" Text="{Binding texto, Mode=TwoWay}" />
-                    </StackLayout>
-                    <Button x:Name="btnBuscarLetra" Text="Buscar" HorizontalOptions="FillAndExpand" />
-                </StackLayout>
-            </Frame>
-        </StackLayout>
+                </Frame>
+            </StackLayout>
+        </ScrollView> 
 	</ContentPage.Content>
 </ContentPage>

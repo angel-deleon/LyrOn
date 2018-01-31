@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+    x:Class="LyrOn.DetalleCancion"
+    Title="Detalle Canción">
+	<ContentPage.Content>
+        <StackLayout>
+            <StackLayout HorizontalOptions="Center">
+                <Label 
+                    Text="Artista"
+                    FontAttributes="Bold"
+                    FontSize="Micro"
+                    HorizontalTextAlignment="Center" />
+                <Label
+                    x:Name="txtArtist"
+                    Text="{Binding Artist}"
+                    FontSize="Large"
+                    HorizontalTextAlignment="Center" />                
+            </StackLayout>
+            <StackLayout HorizontalOptions="Center">
+                <Label 
+                    Text="Canción"
+                    FontAttributes="Bold"
+                    FontSize="Micro" 
+                    HorizontalTextAlignment="Center"/>
+                <Label 
+                    x:Name="txtSong"
+                    Text="{Binding Name}"
+                    FontSize="Medium"  
+                    HorizontalTextAlignment="Center" />
+            </StackLayout>
+            <Image 
+                x:Name="imgArtWork"
+                Aspect="AspectFill"
+                HorizontalOptions="Center"
+                Source="{Binding ArtWork}"
+                HeightRequest="150"
+                WidthRequest="150" />
+            <StackLayout HorizontalOptions="Center"
+                    VerticalOptions="FillAndExpand">
+                <Label 
+                    Text="Letra"
+                    FontAttributes="Bold"
+                    FontSize="Micro" 
+                    HorizontalTextAlignment="Center" />
+                <ScrollView>
+                    <Label 
+                        x:Name="txtLyrics"
+                        Text="{Binding Lyrics}"
+                        HorizontalOptions="FillAndExpand"
+                        VerticalOptions="FillAndExpand"
+                        LineBreakMode="WordWrap"
+                        FontSize="Micro" />
+                </ScrollView>
+            </StackLayout>
+            <Button x:Name="btnAgrega" HorizontalOptions="FillAndExpand" Text="Agrega a lista" IsVisible="false" />
+        </StackLayout>
+	</ContentPage.Content>
+</ContentPage>

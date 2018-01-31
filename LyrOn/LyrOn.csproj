@@ -42,6 +42,18 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
+    <EmbeddedResource Include="NoResults.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ListaResultados.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DetalleCancion.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App.xaml.cs">
@@ -62,18 +74,20 @@
     <Compile Include="ConsultaCanciones.xaml.cs">
       <DependentUpon>ConsultaCanciones.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Classes\NetworkCheck.cs" />
     <Compile Include="Classes\LyricsWS.cs" />
     <Compile Include="Classes\SearchLyricResult.cs" />
     <Compile Include="Classes\GetLyricResult.cs" />
+    <Compile Include="NoResults.xaml.cs">
+      <DependentUpon>NoResults.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ListaResultados.xaml.cs">
+      <DependentUpon>ListaResultados.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DetalleCancion.xaml.cs">
+      <DependentUpon>DetalleCancion.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="Plugin.Connectivity.Abstractions">
-      <HintPath>..\packages\Xam.Plugin.Connectivity.3.0.3\lib\netstandard1.0\Plugin.Connectivity.Abstractions.dll</HintPath>
-    </Reference>
-    <Reference Include="Plugin.Connectivity">
-      <HintPath>..\packages\Xam.Plugin.Connectivity.3.0.3\lib\netstandard1.0\Plugin.Connectivity.dll</HintPath>
-    </Reference>
     <Reference Include="System.Net.Http.Extensions">
       <HintPath>..\packages\Microsoft.Net.Http.2.2.29\lib\portable-net45+win8+wpa81\System.Net.Http.Extensions.dll</HintPath>
     </Reference>

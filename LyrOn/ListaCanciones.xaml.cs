@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-
+using LyrOn.Classes;
 using Xamarin.Forms;
 
 namespace LyrOn
@@ -12,11 +12,12 @@ namespace LyrOn
             InitializeComponent();
 
             songList.ItemsSource = App.songs.listSongs;
+            songList.SelectedItem = null;
 
             songList.ItemSelected += (sender, e) =>
             {
-                var item = e.SelectedItem;
-                DisplayAlert("Seleccionado", "elemento seleccionado: " + item.ToString(), "Entendido");
+                var item = e.SelectedItem as Song;
+                Navigation.PushAsync(new DetalleCancion(item, false));
             };
 
         }

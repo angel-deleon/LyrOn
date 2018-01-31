@@ -20,6 +20,14 @@ namespace LyrOn.Classes
             this.lyrics = lyrics;
         }
 
+        public Song(GetLyricResult result) {
+            this.name = result.lyricSong;
+            this.artist = result.lyricArtist;
+            this.album = result.lyricArtist;
+            this.artWork = new Uri(result.lyricCovertArtUrl);
+            this.lyrics = result.lyric;
+        }
+
         public string Name 
         { 
             get 

@@ -398,16 +398,6 @@ Is that all there is. [repeat till fade]"
                 )
             );
 
-            for (int i = 0; i < 15; i++) {
-                listSongs.Add(
-                    new Song("cancion " + i,
-                             "artista " + i,
-                             "album " + i,
-                             new Uri("https://c1.staticflickr.com/3/2592/5710907256_ac06d9fd93_q.jpg"),
-                             "letra " + i)
-                );
-            }
-
         }
     }
 }

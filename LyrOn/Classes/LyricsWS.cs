@@ -20,94 +20,89 @@ namespace LyrOn.Classes
         }
 
         private string buildSearchString(string text) {
-            string url = searchLyricText + "?lyricText" + text;
+            string url = searchLyricText + "?lyricText=" + text;
             return url;
         }
 
         private string buildGetString(string lyricId, string lyricCheckSum) {
-            string url = getLyric + "?lyricId" + lyricId + "&lyricCheckSum" + lyricCheckSum;
+            string url = getLyric + "?lyricId=" + lyricId + "&lyricCheckSum=" + lyricCheckSum;
             return url;
         }
 
-        public async Task<List<SearchLyricResult>> ListSongsByArtistAndName(string artist, string song) {
+        private List<SearchLyricResult> parseXmlSearchResult(string xml) {
+            XDocument doc = XDocument.Parse(xml);
+            XNamespace ns = "http://api.chartlyrics.com/";
             List<SearchLyricResult> list = new List<SearchLyricResult>();
-            if (NetworkCheck.IsInternet()) {
-                Uri geturi = new Uri(buildSearchString(artist, song));
-                HttpClient client = new HttpClient();
-                HttpResponseMessage responseGet = await client.GetAsync(geturi);
-                string response = await responseGet.Content.ReadAsStringAsync();
-
-                // Parseo del XML
-                XDocument doc = XDocument.Parse(response);
-                foreach(var item in doc.Descendants("SearchLyricResult")) {
+            foreach(var child in doc.Descendants(ns + "SearchLyricResult")) {
+                if  (child.Element(ns + "TrackId") != null) {
                     SearchLyricResult result = new SearchLyricResult();
-                    result.trackId = item.Element("TrackId").Value.ToString();
-                    result.lyricChecksum = item.Element("LyricChecksum").Value.ToString();
-                    result.lyricId = item.Element("LyricId").Value.ToString();
-                    result.songUrl = item.Element("SongUrl").Value.ToString();
-                    result.artistUrl = item.Element("ArtistUrl").Value.ToString();
-                    result.artist = item.Element("Artist").Value.ToString();
-                    result.song = item.Element("Song").Value.ToString();
-                    result.songRank = item.Element("SongRank").Value.ToString();
+                    result.trackId = child.Element(ns + "TrackId").Value.ToString();
+                    result.lyricChecksum = child.Element(ns + "LyricChecksum").Value.ToString();
+                    result.lyricId = child.Element(ns + "LyricId").Value.ToString();
+                    result.songUrl = child.Element(ns + "SongUrl").Value.ToString();
+                    result.artistUrl = child.Element(ns + "ArtistUrl").Value.ToString();
+                    result.artist = child.Element(ns + "Artist").Value.ToString();
+                    result.song = child.Element(ns + "Song").Value.ToString();
+                    result.songRank = child.Element(ns + "SongRank").Value.ToString();
                     list.Add(result);
                 }
             }
             return list;
         }
 
-        public async Task<List<SearchLyricResult>> ListSongsByText(string text)
-        {
-            List<SearchLyricResult> list = new List<SearchLyricResult>();
-            if (NetworkCheck.IsInternet())
-            {
-                Uri geturi = new Uri(buildSearchString(text));
-                HttpClient client = new HttpClient();
-                HttpResponseMessage responseGet = await client.GetAsync(geturi);
-                string response = await responseGet.Content.ReadAsStringAsync();
-
-                // Parseo del XML
-                XDocument doc = XDocument.Parse(response);
-                foreach (var item in doc.Descendants("SearchLyricResult"))
-                {
-                    SearchLyricResult result = new SearchLyricResult();
-                    result.trackId = item.Element("TrackId").Value.ToString();
-                    result.lyricChecksum = item.Element("LyricChecksum").Value.ToString();
-                    result.lyricId = item.Element("LyricId").Value.ToString();
-                    result.songUrl = item.Element("SongUrl").Value.ToString();
-                    result.artistUrl = item.Element("ArtistUrl").Value.ToString();
-                    result.artist = item.Element("Artist").Value.ToString();
-                    result.song = item.Element("Song").Value.ToString();
-                    result.songRank = item.Element("SongRank").Value.ToString();
-                    list.Add(result);
-                }
+        private GetLyricResult parseXmlLyricResult(string xml) {
+            XDocument doc = XDocument.Parse(xml);
+            XNamespace ns = "http://api.chartlyrics.com/";
+            GetLyricResult result = new GetLyricResult();
+            var item = doc.Element(ns + "GetLyricResult");
+            if (item.Element(ns + "TrackId") != null) {
+                result.trackId = item.Element(ns + "TrackId").Value.ToString();
+                result.lyricChecksum = item.Element(ns + "LyricChecksum").Value.ToString();
+                result.lyricId = item.Element(ns + "LyricId").Value.ToString();
+                result.lyricSong = item.Element(ns + "LyricSong").Value.ToString();
+                result.lyricArtist = item.Element(ns + "LyricArtist").Value.ToString();
+                result.lyricUrl = item.Element(ns + "LyricUrl").Value.ToString();
+                result.lyricCovertArtUrl = item.Element(ns + "LyricCovertArtUrl").Value.ToString();
+                result.lyricRank = item.Element(ns + "LyricRank").Value.ToString();
+                result.lyricCorrectUrl = item.Element(ns + "LyricCorrectUrl").Value.ToString();
+                result.lyric = item.Element(ns + "Lyric").Value.ToString();
             }
-            return list;
+            return result;
+        }
+
+        private async Task<string> CallRestWS(Uri geturi) {
+            HttpClient client = new HttpClient();
+            HttpResponseMessage responseGet = await client.GetAsync(geturi);
+            string response = await responseGet.Content.ReadAsStringAsync();
+            return response;
+        }
+
+        public async Task<List<SearchLyricResult>> ListSongs(string artist, string song) {
+            // armar la uri del método get
+            Uri geturi = new Uri(buildSearchString(artist, song));
+            // ejecutar la llamada
+            string response = await CallRestWS(geturi);
+            // Parseo del XML
+            return parseXmlSearchResult(response);
+        }
+
+        public async Task<List<SearchLyricResult>> ListSongs(string text)
+        {
+            // armar la uri del método get
+            Uri geturi = new Uri(buildSearchString(text));
+            // ejecutar la llamada
+            string response = await CallRestWS(geturi);
+            // Parseo del XML
+            return parseXmlSearchResult(response);
         }
 
         public async Task<GetLyricResult> GetSong(string lyricId, string lyricCheckSum) {
-            GetLyricResult result = new GetLyricResult();
-            if (NetworkCheck.IsInternet())
-            {
-                Uri geturi = new Uri(buildGetString(lyricId, lyricCheckSum));
-                HttpClient client = new HttpClient();
-                HttpResponseMessage responseGet = await client.GetAsync(geturi);
-                string response = await responseGet.Content.ReadAsStringAsync();
-
-                // Parseo del XML
-                XDocument doc = XDocument.Parse(response);
-                var item = doc.Element("GetLyricResult");
-                result.trackId = item.Element("TrackId").Value.ToString();
-                result.lyricChecksum = item.Element("LyricChecksum").Value.ToString();
-                result.lyricId = item.Element("LyricId").Value.ToString();
-                result.lyricSong = item.Element("LyricSong").Value.ToString();
-                result.lyricArtist = item.Element("LyricArtist").Value.ToString();
-                result.lyricUrl = item.Element("LyricUrl").Value.ToString();
-                result.lyricCovertArtUrl = item.Element("LyricCovertArtUrl").Value.ToString();
-                result.lyricRank = item.Element("LyricRank").Value.ToString();
-                result.lyricCorrectUrl = item.Element("LyricCorrectUrl").Value.ToString();
-                result.lyric = item.Element("Lyric").Value.ToString();
-            }
-            return result;
+            // armar la uri del método get
+            Uri geturi = new Uri(buildGetString(lyricId, lyricCheckSum));
+            // ejecutar la llamada
+            string response = await CallRestWS(geturi);
+            // Parseo del XML
+            return parseXmlLyricResult(response);
         }
 
     }
